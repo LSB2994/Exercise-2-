@@ -32,7 +32,7 @@ import com.example.roomcrud.viewmodels.UserViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UpdateScreen(navController: NavController, viewModel: UserViewModel, id:Int, firstName:String?, lastName:String?) {
+fun UpdateView(navController: NavController, viewModel: UserViewModel, id:Int, firstName:String?, lastName:String?) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -58,13 +58,13 @@ fun UpdateScreen(navController: NavController, viewModel: UserViewModel, id:Int,
             )
         }
     ) {
-        ContentUpdateView(it, navController , viewModel )
+        ContentUpdateView(it, navController , viewModel,id,firstName,lastName )
     }
 }
 @Composable
-fun ContentUpdateView(it: PaddingValues, navController: NavController, viewModel: UserViewModel){
-    var first_name by remember { mutableStateOf("") }
-    var last_name by remember { mutableStateOf("") }
+fun ContentUpdateView(it: PaddingValues, navController: NavController, viewModel: UserViewModel,id: Int,firstName: String?,lastName: String?){
+    var firstName by remember { mutableStateOf(firstName) }
+    var lastName by remember { mutableStateOf(lastName) }
 
     Column(
         modifier = Modifier
@@ -73,8 +73,8 @@ fun ContentUpdateView(it: PaddingValues, navController: NavController, viewModel
             .fillMaxSize()
     ) {
         OutlinedTextField(
-            value = first_name,
-            onValueChange = {first_name = it},
+            value = firstName?: "",
+            onValueChange = {firstName = it},
             label = { Text(text = "first name") },
             modifier = Modifier
                 .fillMaxWidth()
@@ -82,8 +82,8 @@ fun ContentUpdateView(it: PaddingValues, navController: NavController, viewModel
                 .padding(bottom = 15.dp)
         )
         OutlinedTextField(
-            value = last_name,
-            onValueChange = {last_name = it},
+            value = lastName?: "",
+            onValueChange = {lastName = it},
             label = { Text(text = "last name") },
             modifier = Modifier
                 .fillMaxWidth()
@@ -92,11 +92,11 @@ fun ContentUpdateView(it: PaddingValues, navController: NavController, viewModel
         )
         Button(
             onClick = {
-                val user = User(firstName = first_name, lastName = last_name)
-                viewModel.insetUser(user)
+                val user = User(id = id, firstName = firstName!!, lastName = lastName!!)
+                viewModel.updateUser(user)
                 navController.popBackStack()
             }) {
-            Text(text = "Add")
+            Text(text = "Update")
         }
     }
 }

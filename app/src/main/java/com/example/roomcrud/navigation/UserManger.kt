@@ -9,6 +9,7 @@ import androidx.navigation.navArgument
 import com.example.roomcrud.viewmodels.UserViewModel
 import com.example.roomcrud.views.AddView
 import com.example.roomcrud.views.HomeView
+import com.example.roomcrud.views.UpdateView
 
 @Composable
 fun UserManager(viewModel: UserViewModel){
@@ -26,7 +27,7 @@ fun UserManager(viewModel: UserViewModel){
             navArgument("firstName"){type = NavType.StringType},
             navArgument("lastName"){type = NavType.StringType}
         )){
-            UpdateScreen(
+            UpdateView(
                 navController,
                 viewModel,
                 it.arguments!!.getInt("id"),
